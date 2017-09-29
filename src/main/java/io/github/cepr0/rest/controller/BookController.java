@@ -8,7 +8,7 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class BookController {
 
 	@Autowired
-	private LocalValidatorFactoryBean validator;
+	private Validator validator;
 
 	@Autowired
 	@Qualifier("resourceDescriptionMessageSourceAccessor")
