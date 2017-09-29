@@ -34,7 +34,11 @@ public class BookController {
 	}
 	
 	@PutMapping("/rate")
-	public ResponseEntity<?> rate(@PathVariable("id") Integer bookId, @Valid @RequestBody Rate rate, BindingResult bindingResult) {
+	public ResponseEntity<?> rate(
+			@PathVariable("id") Integer bookId,
+			@RequestBody @Valid Rate rate,
+			BindingResult bindingResult) {
+
 		if (bookId != null) {
 
 			if (bindingResult.hasErrors()) {
