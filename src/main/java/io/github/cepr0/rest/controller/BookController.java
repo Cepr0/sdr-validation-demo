@@ -1,11 +1,11 @@
 package io.github.cepr0.rest.controller;
 
 import io.github.cepr0.rest.dto.Rate;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -17,13 +17,17 @@ import javax.validation.Valid;
 /**
  * @author Cepro, 2017-09-28 28.09.2017.
  */
-@RequiredArgsConstructor
 @RepositoryRestController
 @RequestMapping("/books/{id}")
 public class BookController {
-	
-	@NonNull private final LocalValidatorFactoryBean validator;
-	
+
+	@Autowired
+	private LocalValidatorFactoryBean validator;
+
+	@Autowired
+	@Qualifier("resourceDescriptionMessageSourceAccessor")
+	private MessageSourceAccessor accessor;
+
 	/**
 	 * https://stackoverflow.com/a/44304198/5380322
 	 * https://jira.spring.io/browse/DATAREST-593
@@ -37,12 +41,15 @@ public class BookController {
 	public ResponseEntity<?> rate(
 			@PathVariable("id") Integer bookId,
 			@RequestBody @Valid Rate rate,
-			BindingResult bindingResult) {
+			BindingResult result
+	) {
 
 		if (bookId != null) {
 
-			if (bindingResult.hasErrors()) {
-				return ResponseEntity.badRequest().body(new Resources<>(bindingResult.getFieldErrors()));
+			if (result.hasErrors()) {
+				return ResponseEntity
+						.badRequest()
+						.body(ConstraintViolationMessage.of(result.getFieldErrors(), accessor));
 			}
 			return ResponseEntity.ok(new Resource<>("Rated with " + rate));
 		} else {
