@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 
 import static lombok.AccessLevel.PROTECTED;
 
 /**
- * @author Cepro, 2017-09-28 28.09.2017.
+ * @author Cepro, 2017-09-28
  */
 @Getter
 @Setter

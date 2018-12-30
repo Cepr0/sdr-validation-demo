@@ -9,24 +9,27 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 /**
- * @author Cepro, 2017-09-28 28.09.2017.
+ * @author Cepro, 2017-09-28
  */
 @RepositoryRestController
 @RequestMapping("/books/{id}")
 public class BookController {
 
-	@Autowired
-	private Validator validator;
+	private final Validator validator;
+	private final MessageSourceAccessor accessor;
 
 	@Autowired
-	@Qualifier("resourceDescriptionMessageSourceAccessor")
-	private MessageSourceAccessor accessor;
+	public BookController(LocalValidatorFactoryBean validator, @Qualifier("resourceDescriptionMessageSourceAccessor") MessageSourceAccessor accessor) {
+		this.validator = validator;
+		this.accessor = accessor;
+	}
 
 	/**
 	 * https://stackoverflow.com/a/44304198/5380322
@@ -51,7 +54,7 @@ public class BookController {
 						.badRequest()
 						.body(ConstraintViolationMessage.of(result.getFieldErrors(), accessor));
 			}
-			return ResponseEntity.ok(new Resource<>("Rated with " + rate));
+			return ResponseEntity.ok(new Resource<>("Rated with " + rate.getValue()));
 		} else {
 			throw new IllegalArgumentException("Book ID must not be null!");
 		}

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import static java.util.Arrays.asList;
 
 /**
- * @author Cepro, 2017-09-28 28.09.2017.
+ * @author Cepro, 2017-09-28
  */
 @Component
 @RequiredArgsConstructor
@@ -25,12 +25,12 @@ public class DemoData implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments applicationArguments) throws Exception {
 
-		userRepo.save(asList(
+		userRepo.saveAll(asList(
 				new User("user1", "user1@demo.com"),
 				new User("user2", "user2@demo.com")
 		));
 
-		bookRepo.save(asList(
+		bookRepo.saveAll(asList(
 				new Book("book1"),
 				new Book("book2"),
 				new Book("book3")

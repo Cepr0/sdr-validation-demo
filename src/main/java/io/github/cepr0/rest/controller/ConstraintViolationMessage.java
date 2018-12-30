@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * A-la org.springframework.data.rest.webmvc.support.RepositoryConstraintViolationExceptionMessage
  *
- * @author Cepro, 2017-09-29 29.09.2017.
+ * @author Cepro, 2017-09-29
  */
 @Value(staticConstructor = "of")
 public class ConstraintViolationMessage {

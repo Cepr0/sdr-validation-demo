@@ -11,13 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
 import java.time.Instant;
 
 import static lombok.AccessLevel.PROTECTED;
 
 /**
- * @author Cepro, 2017-09-28 28.09.2017.
+ * @author Cepro, 2017-09-28
  */
 @Getter
 @Setter
